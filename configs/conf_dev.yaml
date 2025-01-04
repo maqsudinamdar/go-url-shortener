@@ -1,0 +1,4 @@
+server:
+  port: :8080
+database:
+  URL: root:12345678@tcp(localhost:3306)/url
