@@ -2,6 +2,7 @@ package domain
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
@@ -25,7 +26,7 @@ func NewStore(db *sqlx.DB) *UrlStore {
 
 
 func (s *UrlStore) create(url Url) (int, error) {
-	result, err := s.db.Exec("INSERT INTO url (long_url, short_url) VALUES (? ?)", url.LongURL, url.ShortURL)
+	result, err := s.db.Exec("INSERT INTO url (long_url, short_url) VALUES (?, ?)", url.LongURL, url.ShortURL)
 	if err != nil {
 		return 0, ErrDbQuery{Err: errors.Wrap(err, "")}
 	}

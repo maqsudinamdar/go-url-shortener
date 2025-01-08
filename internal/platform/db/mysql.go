@@ -3,6 +3,7 @@ package db
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 const mysql = "mysql"
