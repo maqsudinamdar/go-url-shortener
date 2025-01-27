@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"runtime/debug"
 	"url-shortener/internal/platform/db"
 	"url-shortener/internal/url"
 
@@ -14,7 +15,7 @@ import (
 )
 
 const (
-	defaultConfigPath	= 	"./configs"
+	defaultConfigPath	= 	"./../../configs"
 	configFilePathUsage    = "config file directory. Config file must be named 'conf_{env}.yml'."
 	configFilePathFlagName = "configFilePath"
 	envUsage               = "environment for app, prod, dev, test"
@@ -96,7 +97,11 @@ func configuration(path string, env string) {
 	viper.AddConfigPath(path)
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal(fmt.Errorf("fatal: %+v", err))
+		// Log the error with stack trace
+		log.WithFields(log.Fields{
+			"error": err,
+			"stack": string(debug.Stack()), // Capture stack trace
+		}).Fatal("Failed to read configuration file")
 	}
 }
 
